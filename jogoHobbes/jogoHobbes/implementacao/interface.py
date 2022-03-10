@@ -20,14 +20,14 @@ class Interface():
         self._botaoApertado = ''
 
         
-        self.matriz_inic = [[0,3,2,3,0],
+        self.matriz_inic = [[0,3,2,3,0], #tirar, todas elas vem do controlador
                             [0,3,3,3,0],
                             [0,0,0,0,0],
                             [0,3,3,3,0],
                             [0,3,1,3,0]]
                             
-        self.jogador_1 = Jogador(1, True, 'baixo')
-        self.jogador_2 = Jogador(2, False, 'cima')
+        self.jogador_1 = Jogador(1, True, 'baixo') # tirar
+        self.jogador_2 = Jogador(2, False, 'cima') # tirar
 
         self._mainFrame = Frame(self._janela, padx=5, pady=5, bg="dark grey")
         self._mensagem = Frame(self._janela, padx=0, pady=0, bg="lightgreen")

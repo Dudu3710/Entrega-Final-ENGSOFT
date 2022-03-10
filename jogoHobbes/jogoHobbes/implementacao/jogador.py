@@ -12,3 +12,6 @@ class Jogador():
 
     def setposicao(self,pos):
         self.posicao = pos
+
+    def getDirecaoAtual(self):
+        return self._direcaoAtual
