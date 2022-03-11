@@ -4,15 +4,15 @@ import random
 
 class Controlador():
     def __init__(self, nomeJodadorUm:str, nomeJogadorDois:str) -> None:
-        self._tabuleiro = Tabuleiro(nomeJodadorUm=nomeJodadorUm, nomeJogadorDois=nomeJogadorDois)
-        self._jogadorDaVez = None
-        self._partidaAndamento = False
-        self._acao = ''
-        self._partidaEncerrada = False
+        self._tabuleiro = Tabuleiro()
+        self._jogadorDaVez = 0 #consistente com o diagrama de estados do controlador
         self._vencedores = []
+        self._acao = ''
+        self._partidaAndamento = False
+        self._partidaEncerrada = False
         self._jogadaObrigatoriaRealizada = False
-        self.preencherTabuleiro()
-        self.definirJogadorDaVez()
+        #self.preencherTabuleiro()   ---> acho que temos que tirar isso
+        #self.definirJogadorDaVez()    ---> acho que temos que tirar isso
 
     def preencherTabuleiro(self):
         self._tabuleiro.criarTabuleiro()
@@ -20,55 +20,93 @@ class Controlador():
     def definirJogadorDaVez(self):
         self._jogadorDaVez = random.randint(1, 2)
 
-    def informarPartidaAndamento(self):
+    def getPartidaEncerrada(self):
+        return self._partidaEncerrada
+
+    def getPosicoesTabuleito(self):
+        return self._tabuleiro
+
+    def getPartidaAndamento(self):
         return self._partidaAndamento
 
-    def verificarAcao(self,input):
-        self._acao = input
+    def determinarVencedor(self):
+        if self._jogadorDaVez == 1:
+            self._vencedores.append(2)
+        else:
+            self._vencedores.append(1)
+
+        self._partidaEncerrada = True
+
+    def verificarAcao(self, input):
+        if input == 'w':
+            self._acao = 'cima'
+        elif input == 'a':
+            self._acao = 'esquerda'
+        elif input == 's':
+            self._acao = 'baixo'
+        elif input == 'd':
+            self._acao - 'direita'
+        elif input == 'p':
+            self._acao = 'puxar'
+        elif input == 'e':
+            self._acao = 'empurrar'
+
         #direcao = self.getDirecaoJogadorDaVez()
-        direcao = "direita"
+        direcao = self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
 
         #jogada opcional
-        if (self._acao == "cima") or(self._acao == "direita") or (self._acao == "esquerda") or (self._acao == "baixo"):
+        if (self._acao == 'cima') or(self._acao == 'direita') or (self._acao == 'esquerda') or (self._acao == 'baixo'):
             #seta aponta para mesma direcao do movimento
             if self._acao == direcao:
-                self.moverRei(self._jogadorDaVez,direcao)
+                self.moverRei(self._jogadorDaVez, direcao)
             else:
-                self.mudarDirecaoRei(self._jogadorDaVez,direcao)
-
-        
+                self.mudarDirecaoRei(self._jogadorDaVez, direcao)
 
         #jogada obrigatoria
-        else:
-            print("entreri aq")
+        elif (self._acao == 'puxar') or (self._acao == 'empurrar'):
+            if self._acao == 'puxar':
+                self.puxarPeao(self._jogadorDaVez, direcao)
+            else:
+                self.empurrarPeao(self._jogadorDaVez, direcao)
+            
+            self._jogadaObrigatoriaRealizada = True
+        
+        self.verificarVencedores(self._jogadorDaVez)
+        vencedores = self._tabuleiro.getVencedores()
 
+        if vencedores:
+            self._partidaEncerrada = True
+        else:
+            if self._jogadaObrigatoriaRealizada:
+                self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
+                self._jogadaObrigatoriaRealizada = False
 
     def getDirecaoJogadorDaVez(self):
         return self._tabuleiro.getDirecaoJogadorDaVez(self.getQualJogador())
 
-    def moverRei(self,jogador,direcao):
-        self._tabuleiro.moverPeca()
+    def moverRei(self, jogador, direcao):
+        self._tabuleiro.moverPeca(jogador, direcao)
 
-    def mudarDirecaoRei(self,jogador,direcao):
-        self._tabuleiro.mudarDirecaoPeca(jogador,direcao)
+    def mudarDirecaoRei(self, jogador, direcao):
+        self._tabuleiro.mudarDirecaoPeca(jogador, direcao)
 
-    def mudarJogadorDaVez(self):
-        pass
+    def puxarPeao(self, jogador, direcao):
+        self._tabuleiro.puxarPeao(jogador, direcao)
 
-    def puxarPeao(self):
-        pass
+    def empurrarPeao(self, jogador, direcao):
+        self._tabuleiro.empurrarPeao(jogador, direcao)
 
-    def empurrarPeao(self):
-        pass
+    def verificarVencedores(self, jogador):
+        self._tabuleiro.verificarEncerramentoDaPartida(jogador)
 
-    def verificarVencedores(self):
-        pass
+    def mudarJogadorDaVez(self, jogador):
+        if jogador == 1:
+            return 2
+        else:
+            return 1
 
     def getVencedores(self):
-        pass
+        return self._vencedores()
 
-    def getQualJogador(self):
-        return self._jogadorDaVez
-
-cont = Controlador("a","b")
-cont.verificarAcao("direita")
+cont = Controlador("a","b") #tirar
+cont.verificarAcao("direita") #tirar
