@@ -100,8 +100,7 @@ class Tabuleiro():
         else:
             posicaoPeca = self._jogadorDois._posicao
 
-        haPeao, posicaoPeao = self.verificarPeaoDirecao(posicaoPeca, direcao)
-
+        (haPeao, posicaoPeao) = self.verificarPeaoDirecao(posicaoPeca, direcao)
         if haPeao:
             traseiraVazia = self.verificarTraseiraJogador(posicaoPeca, direcao)
 
@@ -126,24 +125,27 @@ class Tabuleiro():
         if direcao == 'cima':
             if x == 0 or self._matrizPosicoes[x-1][y] != 3:
                 posicaoPeao = [x-1, y]
-                return False, posicaoPeao
+                #a gente tem que retornar tupla !!! 
+                return (False, posicaoPeao)
 
         elif direcao == 'direita':
             if x == 4 or self._matrizPosicoes[x][y-1] != 3:
                 posicaoPeao = [x, y-1]
-                return False, posicaoPeao
+                return (False, posicaoPeao)
 
         elif direcao == 'baixo':
             if x == 4 or self._matrizPosicoes[x+1][y] != 3:
                 posicaoPeao = [x+1, y]
-                return False, posicaoPeao
+                return (False, posicaoPeao)
 
         elif direcao == 'esquerda':
             if y == 0 or self._matrizPosicoes[x][y+1] != 3:
                 posicaoPeao = [x, y+1]
-                return False, posicaoPeao
+                return (False, posicaoPeao)
 
-        return True, posicaoPeao
+        #se nao cair em nenhum if ele nao atualiza ---
+        posicaoPeao = [x,y]
+        return (True, posicaoPeao)
 
     def verificarTraseiraJogador(self, posicaoPeca, direcao):
         x, y = posicaoPeca
@@ -172,7 +174,7 @@ class Tabuleiro():
         else:
             posicaoPeca = self._jogadorDois._posicao
 
-        haPeao, posicaoPeao = self.verificarPeaoDirecao(posicaoPeca, direcao)
+        (haPeao, posicaoPeao) = self.verificarPeaoDirecao(posicaoPeca, direcao)
 
         if haPeao:
             dianteiraVazia = self.verificarDirecaoLivre(posicaoPeao, direcao)
@@ -290,3 +292,6 @@ class Tabuleiro():
 
     def getVencedores(self):
         return self._vencedores
+
+    def getMatrizPosicoes(self):
+        return self._matrizPosicoes

@@ -23,8 +23,8 @@ class Controlador():
     def getPartidaEncerrada(self):
         return self._partidaEncerrada
 
-    def getPosicoesTabuleito(self):
-        return self._tabuleiro
+    def getPosicoesTabuleiro(self):
+        return self._tabuleiro.getMatrizPosicoes()
 
     def getPartidaAndamento(self):
         return self._partidaAndamento
@@ -39,20 +39,26 @@ class Controlador():
 
     def verificarAcao(self, input):
         if input == 'w':
+            print('recebi acao w\n')
             self._acao = 'cima'
         elif input == 'a':
+            print('recebi acao a\n')
             self._acao = 'esquerda'
         elif input == 's':
+            print('recebi acao s\n')
             self._acao = 'baixo'
         elif input == 'd':
-            self._acao - 'direita'
+            print('recebi acao d\n')
+            self._acao = 'direita'
         elif input == 'p':
+            print('recebi acao p\n')
             self._acao = 'puxar'
         elif input == 'e':
+            print('recebi acao e\n')
             self._acao = 'empurrar'
 
-        #direcao = self.getDirecaoJogadorDaVez()
-        direcao = self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
+        direcao = self.getDirecaoJogadorDaVez()
+        #direcao = self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
 
         #jogada opcional
         if (self._acao == 'cima') or(self._acao == 'direita') or (self._acao == 'esquerda') or (self._acao == 'baixo'):
@@ -82,7 +88,7 @@ class Controlador():
                 self._jogadaObrigatoriaRealizada = False
 
     def getDirecaoJogadorDaVez(self):
-        return self._tabuleiro.getDirecaoJogadorDaVez(self.getQualJogador())
+        return self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
 
     def moverRei(self, jogador, direcao):
         self._tabuleiro.moverPeca(jogador, direcao)
@@ -108,5 +114,4 @@ class Controlador():
     def getVencedores(self):
         return self._vencedores()
 
-cont = Controlador("a","b") #tirar
-cont.verificarAcao("direita") #tirar
+
