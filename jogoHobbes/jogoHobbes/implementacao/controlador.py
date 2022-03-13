@@ -11,6 +11,7 @@ class Controlador():
         self._partidaAndamento = False
         self._partidaEncerrada = False
         self._jogadaObrigatoriaRealizada = False
+        self._flagJogada = False #-----> Criei esse flagJogada para comunicacao com a interface
         self.preencherTabuleiro()   #---> acho que temos que tirar isso
         self.definirJogadorDaVez()    #---> acho que temos que tirar isso
 
@@ -74,23 +75,28 @@ class Controlador():
         #jogada obrigatoria
         elif (self._acao == 'puxar') or (self._acao == 'empurrar'):
             if self._acao == 'puxar':
-                self.puxarPeao(self._jogadorDaVez, direcao)
+                self._jogadaObrigatoriaRealizada=self.puxarPeao(self._jogadorDaVez, direcao)
             else:
-                self.empurrarPeao(self._jogadorDaVez, direcao)
+                self._jogadaObrigatoriaRealizada=self.empurrarPeao(self._jogadorDaVez, direcao)  #MUDAR DIAGRAMA DE SEQUENCIA DE PUXAR E 
+                                                                                   #EMPURRAR PEAO POIS ELES DEVEM INFORMAR QUE NAO EH POSSIVEL REALIZAR MOVIMENTO
+                                                                                   #ELES RETORNAM TRUE SE FOI POSSIVEL E FALSO CASO NAO FOI POSSIVEL
             
-            self._jogadaObrigatoriaRealizada = True
-        
-        
-            self.verificarVencedores(self._jogadorDaVez)
-            vencedores = self._tabuleiro.getVencedores()
+            print("JOGADA OBRIGATORIA REALIZADA = ",self._jogadaObrigatoriaRealizada)
 
-            if vencedores:
-                self._partidaEncerrada = True
-                print("partida encerrada")
-            else:
-                if self._jogadaObrigatoriaRealizada:
+            if self._jogadaObrigatoriaRealizada:
+
+                self.verificarVencedores(self._jogadorDaVez)
+                vencedores = self._tabuleiro.getVencedores()
+
+                if vencedores:
+                    self._partidaEncerrada = True
+                    print("partida encerrada")
+                else:
                     self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
+                    self._flagJogada = True
                     self._jogadaObrigatoriaRealizada = False
+            else:
+                self._flagJogada = False
         else:
             pass
 
@@ -104,10 +110,10 @@ class Controlador():
         self._tabuleiro.mudarDirecaoPeca(jogador, direcao)
 
     def puxarPeao(self, jogador, direcao):
-        self._tabuleiro.puxarPeao(jogador, direcao)
+        return self._tabuleiro.puxarPeao(jogador, direcao)
 
     def empurrarPeao(self, jogador, direcao):
-        self._tabuleiro.empurrarPeao(jogador, direcao)
+        return self._tabuleiro.empurrarPeao(jogador, direcao)
 
     def verificarVencedores(self, jogador):
         self._tabuleiro.verificarEncerramentoDaPartida(jogador)
@@ -130,3 +136,16 @@ class Controlador():
     def getPartidaEncerrada(self):
         return self._partidaEncerrada
 
+    def setJogadaObrigatoriaRealizada(self,jogada_obrigatoria):
+        self._jogadaObrigatoriaRealizada = jogada_obrigatoria
+
+    def getJogadaObrigatoriaRealizada(self):
+        return self._jogadaObrigatoriaRealizada
+
+    def getFlagJogada(self):
+        return self._flagJogada
+
+    def getDirecaoJogador1(self):
+        return self._tabuleiro._jogadorUm.getDirecaoJogador()
+    def getDirecaoJogador2(self):
+        return self._tabuleiro._jogadorDois.getDirecaoJogador()

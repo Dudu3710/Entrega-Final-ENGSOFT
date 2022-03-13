@@ -128,7 +128,9 @@ class Tabuleiro():
                 self.atualizarMatrizPosicoes(posicaoPeca, direcaoNova, jogador)
                 #atualizando a posicao do peao para recuar
                 self.atualizarMatrizPosicoes(posicaoPeao, direcaoNova, 3)
+                return True
 
+        return False
     def verificarPeaoDirecao(self, posicaoPeca, direcao):
         x, y = posicaoPeca
 
@@ -202,7 +204,9 @@ class Tabuleiro():
                 self.atualizarMatrizPosicoes(posicaoPeao, direcao, 3)
                 #atualizando a posicao do peao para recuar
                 self.atualizarMatrizPosicoes(posicaoPeca, direcao, jogador)
-    
+                return True
+        return False
+        
     def verificarEncerramentoDaPartida(self, jogador):
         reiPosicoesAdjacentes = self.verificarPosicoesAdjacentes(jogador)
         
