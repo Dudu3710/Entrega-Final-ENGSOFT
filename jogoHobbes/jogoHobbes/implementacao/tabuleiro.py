@@ -245,11 +245,14 @@ class Tabuleiro():
             jogadorOposto = 1
             x, y = self._jogadorDois._posicao
 
-        for x in range(len(self._matrizPosicoes)):
-            for y in range(len(self._matrizPosicoes[x])):
-                if self._matrizPosicoes[x][y] == jogadorOposto:
-                    x_oposto = x
-                    y_oposto = y
+        for i in range(len(self._matrizPosicoes)):
+            for j in range(len(self._matrizPosicoes[x])):
+                if self._matrizPosicoes[i][j] == jogadorOposto:
+                    x_oposto = i
+                    y_oposto = j
+
+        print(f"posicao jogador {jogador} = x={x} y={y}")
+        print(f"posicao jogadoroposto {jogadorOposto} = x={x_oposto} y={y_oposto}")
 
         if (x_oposto == x-1 and y_oposto == y) or (x_oposto == x+1 and y_oposto == y) or (x_oposto == x and y_oposto == y+1) or (x_oposto == x and y_oposto == y-1):
             return True

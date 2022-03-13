@@ -80,20 +80,20 @@ class Controlador():
             
             self._jogadaObrigatoriaRealizada = True
         
+        
+            self.verificarVencedores(self._jogadorDaVez)
+            vencedores = self._tabuleiro.getVencedores()
+
+            if vencedores:
+                self._partidaEncerrada = True
+                print("partida encerrada")
+            else:
+                if self._jogadaObrigatoriaRealizada:
+                    self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
+                    self._jogadaObrigatoriaRealizada = False
         else:
             pass
         
-        self.verificarVencedores(self._jogadorDaVez)
-        vencedores = self._tabuleiro.getVencedores()
-
-        if vencedores:
-            self._partidaEncerrada = True
-            print("partida encerrada")
-        else:
-            if self._jogadaObrigatoriaRealizada:
-                self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
-                self._jogadaObrigatoriaRealizada = False
-
     def getDirecaoJogadorDaVez(self):
         return self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
 
