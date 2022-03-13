@@ -93,7 +93,7 @@ class Controlador():
                     self._jogadaObrigatoriaRealizada = False
         else:
             pass
-        
+
     def getDirecaoJogadorDaVez(self):
         return self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
 
@@ -126,4 +126,7 @@ class Controlador():
 
     def getJogadorDaVez(self):
         return self._jogadorDaVez
+
+    def getPartidaEncerrada(self):
+        return self._partidaEncerrada
 

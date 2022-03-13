@@ -265,10 +265,10 @@ class Tabuleiro():
         if x == 0:
             return True
         elif x == 1:
-            if not self._matrizPosicoes[x-1][y] != 0:
+            if self._matrizPosicoes[x-1][y] == 0:
                 return False
         else:
-            if not (self._matrizPosicoes[x-1][y] != 0 and self._matrizPosicoes[x-2][y] != 0):
+            if (self._matrizPosicoes[x-1][y] == 0 or self._matrizPosicoes[x-2][y] == 0):
                 return False
         return True
 
@@ -278,10 +278,10 @@ class Tabuleiro():
         if y == 4:
             return True
         elif y == 3:
-            if not self._matrizPosicoes[x][y+1] != 0:
+            if self._matrizPosicoes[x][y+1] == 0:
                 return False
         else:
-            if not (self._matrizPosicoes[x][y+1] != 0 and self._matrizPosicoes[x][y+2] != 0):
+            if (self._matrizPosicoes[x][y+1] == 0 or self._matrizPosicoes[x][y+2] == 0):
                 return False
         return True
 
@@ -291,10 +291,10 @@ class Tabuleiro():
         if x == 4:
             return True
         elif x == 3:
-            if not self._matrizPosicoes[x+1][y] != 0:
+            if self._matrizPosicoes[x+1][y] == 0:
                 return False
         else:
-            if not (self._matrizPosicoes[x+1][y] != 0 and self._matrizPosicoes[x+2][y] != 0):
+            if (self._matrizPosicoes[x+1][y] == 0 or self._matrizPosicoes[x+2][y] == 0):
                 return False
         return True
 
@@ -304,10 +304,10 @@ class Tabuleiro():
         if y == 0:
             return True
         elif y == 1:
-            if not self._matrizPosicoes[x][y-1] != 0:
+            if self._matrizPosicoes[x][y-1] == 0:
                 return False
         else:
-            if not (self._matrizPosicoes[x][y-1] != 0 and self._matrizPosicoes[x][y-2] != 0):
+            if (self._matrizPosicoes[x][y-1] == 0 or self._matrizPosicoes[x][y-2] == 0):
                 return False
         return True
 
