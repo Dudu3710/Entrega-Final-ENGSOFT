@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter
 from controlador import Controlador
+import numpy as np
 #from jogador import Jogador
 
 from time import sleep
@@ -55,7 +56,7 @@ class Interface():
 
         #apenas um teste !!! mudar depois para iniciar somente quando o botao de iniciar for apertado
         #self._controlador.preencherTabuleiro()
-        botao_iniciar = Button(self._buttonFrame,text = "INICIAR",height = 4,width = 15,command=self.iniciar_jogo())
+        botao_iniciar = Button(self._buttonFrame,text = "INICIAR",height = 4,width = 15,command=lambda:self.iniciar_jogo(vazio,rei_1,rei_2,peao,''))
         botao_desistir = Button(self._buttonFrame,text = "DESISTIR",height = 4,width = 15,command='')
         botao_sair_jogo = Button(self._buttonFrame,text = "SAIR DO JOGO",height = 4,width = 15,command='')
         botao_iniciar.grid(row= 0, column=0)
@@ -64,7 +65,6 @@ class Interface():
 
         #realizar jogada
         self._janela.bind('w', lambda event: self.atualiza_tabuleiro(vazio,rei_1,rei_2,peao,'w'))
-        print(self._controlador.getPartidaAndamento())
         self._janela.bind('a', lambda event: self.atualiza_tabuleiro(vazio,rei_1,rei_2,peao,'a'))
         self._janela.bind('s', lambda event: self.atualiza_tabuleiro(vazio,rei_1,rei_2,peao,'s'))
         self._janela.bind('d', lambda event: self.atualiza_tabuleiro(vazio,rei_1,rei_2,peao,'d'))
@@ -76,15 +76,18 @@ class Interface():
         #self.atualiza_tabuleiro(vazio,rei_1,rei_2,peao,self._mainFrame)
         self._janela.mainloop()
 
-    def iniciar_jogo(self):
-        print("pq ta entrando aqui ?")
-        self._controlador.setPartidaAndamento(True)
+    def iniciar_jogo(self,vazio,rei_1,rei_2,peao,acao):
+        if self._controlador.getPartidaAndamento() == False:
+            self._controlador.setPartidaAndamento(True)
+            self.atualiza_tabuleiro(vazio,rei_1,rei_2,peao,acao)
 
     def atualiza_tabuleiro(self,vazio,rei_1,rei_2,peao,acao):
         if self._controlador.getPartidaAndamento():
-
             self._controlador.verificarAcao(acao)
-            print(self._controlador.getPosicoesTabuleiro())
+            print(self._controlador.getJogadorDaVez())
+            print(self._controlador.getDirecaoJogadorDaVez())
+            print(np.matrix(self._controlador.getPosicoesTabuleiro()))
+            
             for y in range(5):
                 for x in range(5):
                     if self._controlador.getPosicoesTabuleiro() [x][y] == 0:
@@ -93,7 +96,7 @@ class Interface():
                     elif self._controlador.getPosicoesTabuleiro()  [x][y] == 3:
                         labelPeao = Label(self._mainFrame, bd = 2, relief="solid", image = peao)
                         xLabel = labelPeao
-                    elif self._controlador.getPosicoesTabuleiro()  [x][y] == 2:
+                    elif self._controlador.getPosicoesTabuleiro()  [x][y] == 1:
                         labelReiUm = Label(self._mainFrame, bd = 2, relief="solid", image = rei_1)
                         xLabel = labelReiUm
                     else:

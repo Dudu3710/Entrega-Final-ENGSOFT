@@ -56,6 +56,8 @@ class Controlador():
         elif input == 'e':
             print('recebi acao e\n')
             self._acao = 'empurrar'
+        else:
+            self._acao = ''
 
         direcao = self.getDirecaoJogadorDaVez()
         #direcao = self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
@@ -66,6 +68,7 @@ class Controlador():
             if self._acao == direcao:
                 self.moverRei(self._jogadorDaVez, direcao)
             else:
+                direcao = self._acao
                 self.mudarDirecaoRei(self._jogadorDaVez, direcao)
 
         #jogada obrigatoria
@@ -77,11 +80,15 @@ class Controlador():
             
             self._jogadaObrigatoriaRealizada = True
         
+        else:
+            pass
+        
         self.verificarVencedores(self._jogadorDaVez)
         vencedores = self._tabuleiro.getVencedores()
 
         if vencedores:
             self._partidaEncerrada = True
+            print("partida encerrada")
         else:
             if self._jogadaObrigatoriaRealizada:
                 self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
@@ -117,4 +124,6 @@ class Controlador():
     def setPartidaAndamento(self,partida_iniciada):
         self._partidaAndamento = partida_iniciada
 
+    def getJogadorDaVez(self):
+        return self._jogadorDaVez
 

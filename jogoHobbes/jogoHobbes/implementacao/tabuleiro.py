@@ -12,11 +12,11 @@ class Tabuleiro():
     def criarTabuleiro(self):
         self._jogadorUm = Jogador(id=1, posicao = [0, 2], direcaoAtual='baixo')
         self._jogadorDois = Jogador(id=2, posicao = [4, 2], direcaoAtual='cima')
-        self._matrizPosicoes =[[0,3,2,3,0],
+        self._matrizPosicoes =[[0,3,1,3,0],
                                [0,3,3,3,0],
                                [0,0,0,0,0],
                                [0,3,3,3,0],
-                               [0,3,1,3,0]]
+                               [0,3,2,3,0]]
 
     def getDirecaoJogadorDaVez(self, jogador):
         if jogador == 1:
@@ -43,7 +43,7 @@ class Tabuleiro():
                 return False
 
         elif direcao == 'direita':
-            if x == 4 or self._matrizPosicoes[x][y-1] != 0:
+            if y == 4 or self._matrizPosicoes[x][y+1] != 0:
                 return False
 
         elif direcao == 'baixo':
@@ -51,7 +51,7 @@ class Tabuleiro():
                 return False
 
         elif direcao == 'esquerda':
-            if y == 0 or self._matrizPosicoes[x][y+1] != 0:
+            if y == 0 or self._matrizPosicoes[x][y-1] != 0:
                 return False
 
         return True
@@ -61,30 +61,38 @@ class Tabuleiro():
 
         if jogador == 1:
             if direcao == 'cima':
-                self._matrizPosicoes[x+1][y] = jogador
-                self._jogadorUm._posicao = [x+1, y]
+                self._matrizPosicoes[x-1][y] = jogador
+                if jogador != 3:
+                    self._jogadorUm._posicao = [x-1, y]
             elif direcao == 'direita':
                 self._matrizPosicoes[x][y+1] = jogador
-                self._jogadorUm._posicao = [x][y+1]
+                if jogador != 3:
+                    self._jogadorUm._posicao = [x,y+1]
             elif direcao == 'baixo':
                 self._matrizPosicoes[x+1][y] = jogador
-                self._jogadorUm._posicao = [x+1][y]
+                if jogador != 3:
+                    self._jogadorUm._posicao = [x+1,y]
             elif direcao == 'esquerda':
                 self._matrizPosicoes[x][y-1] = jogador
-                self._jogadorUm._posicao = [x][y-1]
+                if jogador != 3:
+                    self._jogadorUm._posicao = [x ,y-1]
         else:
             if direcao == 'cima':
-                self._matrizPosicoes[x+1][y] = jogador
-                self._jogadorDois._posicao = [x+1, y]
+                self._matrizPosicoes[x-1][y] = jogador
+                if jogador != 3:
+                    self._jogadorDois._posicao = [x-1, y]
             elif direcao == 'direita':
                 self._matrizPosicoes[x][y+1] = jogador
-                self._jogadorDois._posicao = [x][y+1]
+                if jogador != 3:
+                    self._jogadorDois._posicao = [x ,y+1]
             elif direcao == 'baixo':
                 self._matrizPosicoes[x+1][y] = jogador
-                self._jogadorDois._posicao = [x+1][y]
+                if jogador != 3:
+                    self._jogadorDois._posicao = [x+1 , y]
             elif direcao == 'esquerda':
                 self._matrizPosicoes[x][y-1] = jogador
-                self._jogadorDois._posicao = [x][y-1]
+                if jogador != 3:
+                    self._jogadorDois._posicao = [x , y-1]
 
         self._matrizPosicoes[x][y] = 0
 
@@ -101,8 +109,10 @@ class Tabuleiro():
             posicaoPeca = self._jogadorDois._posicao
 
         (haPeao, posicaoPeao) = self.verificarPeaoDirecao(posicaoPeca, direcao)
+        print(f"posicao da peca {jogador} = {posicaoPeca}\nha peao ={haPeao}\n posicaoPeao{posicaoPeao}")
         if haPeao:
             traseiraVazia = self.verificarTraseiraJogador(posicaoPeca, direcao)
+            print(f"traseira vazia = {traseiraVazia}")
 
             if direcao == 'cima':
                 direcaoNova = 'baixo'
@@ -127,59 +137,67 @@ class Tabuleiro():
                 posicaoPeao = [x-1, y]
                 #a gente tem que retornar tupla !!! 
                 return (False, posicaoPeao)
-
+            else:
+                posicaoPeao = [x-1, y]
+                return (True, posicaoPeao)
         elif direcao == 'direita':
-            if x == 4 or self._matrizPosicoes[x][y-1] != 3:
-                posicaoPeao = [x, y-1]
+            if y == 4 or self._matrizPosicoes[x][y+1] != 3:
+                posicaoPeao = [x, y+1]
                 return (False, posicaoPeao)
-
+            else:
+                posicaoPeao = [x,y+1]
+                return (True, posicaoPeao)
         elif direcao == 'baixo':
             if x == 4 or self._matrizPosicoes[x+1][y] != 3:
                 posicaoPeao = [x+1, y]
                 return (False, posicaoPeao)
-
+            else:
+                posicaoPeao = [x+1,y]
+                return (True,posicaoPeao)
         elif direcao == 'esquerda':
-            if y == 0 or self._matrizPosicoes[x][y+1] != 3:
-                posicaoPeao = [x, y+1]
+            if y == 0 or self._matrizPosicoes[x][y-1] != 3:
+                posicaoPeao = [x, y-1]
                 return (False, posicaoPeao)
-
-        #se nao cair em nenhum if ele nao atualiza ---
-        posicaoPeao = [x,y]
-        return (True, posicaoPeao)
-
+            else:
+                posicaoPeao = [x, y-1]
+                return (True, posicaoPeao)
+                
     def verificarTraseiraJogador(self, posicaoPeca, direcao):
         x, y = posicaoPeca
 
         if direcao == 'cima':
-            if x == 0 or self._matrizPosicoes[x+1][y] != 0:
+            if x == 4 or self._matrizPosicoes[x+1][y] != 0:
                 return False
 
         elif direcao == 'direita':
-            if x == 4 or self._matrizPosicoes[x][y+1] != 0:
+            if y == 0 or self._matrizPosicoes[x][y-1] != 0:
                 return False
 
         elif direcao == 'baixo':
-            if x == 4 or self._matrizPosicoes[x-1][y] != 0:
+            if x == 0 or self._matrizPosicoes[x-1][y] != 0:
                 return False
 
         elif direcao == 'esquerda':
-            if y == 0 or self._matrizPosicoes[x][y-1] != 0:
+            if y == 4 or self._matrizPosicoes[x][y+1] != 0:
                 return False
 
         return True
 
     def empurrarPeao(self, jogador, direcao):
+        #print(direcao)
         if jogador == 1:
             posicaoPeca = self._jogadorUm._posicao
         else:
             posicaoPeca = self._jogadorDois._posicao
 
         (haPeao, posicaoPeao) = self.verificarPeaoDirecao(posicaoPeca, direcao)
+        print(f"posicao da peca {jogador} = {posicaoPeca}\nha peao ={haPeao}\n posicaoPeao{posicaoPeao}")
 
         if haPeao:
             dianteiraVazia = self.verificarDirecaoLivre(posicaoPeao, direcao)
-
+            print(f"dianteira vazia = {dianteiraVazia}")
             if dianteiraVazia:
+                print("posciao peao a ser empurrado",posicaoPeao)
                 #atualizando a posicao do rei na matriz para recuar
                 self.atualizarMatrizPosicoes(posicaoPeao, direcao, 3)
                 #atualizando a posicao do peao para recuar
