@@ -11,8 +11,8 @@ class Controlador():
         self._partidaAndamento = False
         self._partidaEncerrada = False
         self._jogadaObrigatoriaRealizada = False
-        #self.preencherTabuleiro()   ---> acho que temos que tirar isso
-        #self.definirJogadorDaVez()    ---> acho que temos que tirar isso
+        self.preencherTabuleiro()   #---> acho que temos que tirar isso
+        self.definirJogadorDaVez()    #---> acho que temos que tirar isso
 
     def preencherTabuleiro(self):
         self._tabuleiro.criarTabuleiro()
@@ -113,5 +113,8 @@ class Controlador():
 
     def getVencedores(self):
         return self._vencedores()
+
+    def setPartidaAndamento(self,partida_iniciada):
+        self._partidaAndamento = partida_iniciada
 
 
