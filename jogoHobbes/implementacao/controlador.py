@@ -3,7 +3,7 @@ from tabuleiro import Tabuleiro
 import random
 
 class Controlador():
-    def __init__(self, nomeJodadorUm:str, nomeJogadorDois:str) -> None:
+    def __init__(self):
         self._tabuleiro = Tabuleiro()
         self._jogadorDaVez = 0
         self._vencedores = []
@@ -12,6 +12,9 @@ class Controlador():
         self._partidaEncerrada = False
         self._jogadaObrigatoriaRealizada = False
         self._flagJogada = False
+        self.preencherTabuleiro()
+        self.definirJogadorDaVez()
+        self.setPartidaAndamento(True)
 
     def preencherTabuleiro(self):
         self._tabuleiro.criarTabuleiro()
