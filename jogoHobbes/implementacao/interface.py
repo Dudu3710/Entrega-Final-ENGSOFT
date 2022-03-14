@@ -66,20 +66,13 @@ class Interface():
                 self._controlador._jogadorDaVez = 2
             else:
                 self._controlador._jogadorDaVez = 1
-
-            self._controlador.setPosicoesTabuleiro(matriz = [[0,0,0,0,0],
-                                                            [0,0,0,0,0],
-                                                            [0,0,0,0,0],
-                                                            [0,0,0,0,0],
-                                                            [0,0,0,0,0]])
-
             self.atualizaInterface('')
 
         else:
             self.mostrarLabels('nao_andamento')
 
     def realizarJogada(self, acao):
-        self._controlador.verificarAcao(acao)
+        self._controlador.realizarJogada(acao)
 
     def mostrarLabels(self, acao):
         labelInstrucao = Label(self._mensagem, text='                           ' , font="Courier 21",bg = "lightgrey")
@@ -150,6 +143,11 @@ class Interface():
                     texto = 'Jogador prata venceu!'
                 labelInstrucao = Label(self._mensagem, text=texto , font="Courier 21")
                 labelInstrucao.grid(row=0, column=0)
+                self._controlador.setPosicoesTabuleiro(matriz = [[0,0,0,0,0],
+                                                            [0,0,0,0,0],
+                                                            [0,0,0,0,0],
+                                                            [0,0,0,0,0],
+                                                            [0,0,0,0,0]])
                 self._partidaAndamento = False
             
             self.mostrarTabuleiro()

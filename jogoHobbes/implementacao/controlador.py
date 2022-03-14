@@ -61,6 +61,8 @@ class Controlador():
         else:
             self._acao = ''
 
+    def realizarJogada(self, input):
+        self.verificarAcao(input)
         direcao = self.getDirecaoJogadorDaVez()
 
         #jogada opcional
