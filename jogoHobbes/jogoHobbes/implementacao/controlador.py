@@ -24,8 +24,14 @@ class Controlador():
     def getPartidaEncerrada(self):
         return self._partidaEncerrada
 
+    def setPartidaEncerrada(self, boolean):
+        self._partidaEncerrada = boolean
+
     def getPosicoesTabuleiro(self):
         return self._tabuleiro.getMatrizPosicoes()
+
+    def setPosicoesTabuleiro(self, matriz):
+        self._tabuleiro.setMatrizPosicoes(matriz)
 
     def getPartidaAndamento(self):
         return self._partidaAndamento
@@ -40,22 +46,22 @@ class Controlador():
 
     def verificarAcao(self, input):
         if input == 'w':
-            print('recebi acao w\n')
+            #print('recebi acao w\n')
             self._acao = 'cima'
         elif input == 'a':
-            print('recebi acao a\n')
+            #print('recebi acao a\n')
             self._acao = 'esquerda'
         elif input == 's':
-            print('recebi acao s\n')
+            #print('recebi acao s\n')
             self._acao = 'baixo'
         elif input == 'd':
-            print('recebi acao d\n')
+            #print('recebi acao d\n')
             self._acao = 'direita'
         elif input == 'p':
-            print('recebi acao p\n')
+            #print('recebi acao p\n')
             self._acao = 'puxar'
         elif input == 'e':
-            print('recebi acao e\n')
+            #print('recebi acao e\n')
             self._acao = 'empurrar'
         else:
             self._acao = ''
@@ -81,7 +87,7 @@ class Controlador():
                                                                                    #EMPURRAR PEAO POIS ELES DEVEM INFORMAR QUE NAO EH POSSIVEL REALIZAR MOVIMENTO
                                                                                    #ELES RETORNAM TRUE SE FOI POSSIVEL E FALSO CASO NAO FOI POSSIVEL
             
-            print("JOGADA OBRIGATORIA REALIZADA = ",self._jogadaObrigatoriaRealizada)
+            #print("JOGADA OBRIGATORIA REALIZADA = ",self._jogadaObrigatoriaRealizada)
 
             if self._jogadaObrigatoriaRealizada:
 
@@ -90,7 +96,7 @@ class Controlador():
 
                 if vencedores:
                     self._partidaEncerrada = True
-                    print("partida encerrada")
+                    #print("partida encerrada")
                 else:
                     self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
                     self._flagJogada = True

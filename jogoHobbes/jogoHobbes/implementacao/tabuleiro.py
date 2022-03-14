@@ -193,13 +193,13 @@ class Tabuleiro():
             posicaoPeca = self._jogadorDois._posicao
 
         (haPeao, posicaoPeao) = self.verificarPeaoDirecao(posicaoPeca, direcao)
-        print(f"posicao da peca {jogador} = {posicaoPeca}\nha peao ={haPeao}\n posicaoPeao{posicaoPeao}")
+        #print(f"posicao da peca {jogador} = {posicaoPeca}\nha peao ={haPeao}\n posicaoPeao{posicaoPeao}")
 
         if haPeao:
             dianteiraVazia = self.verificarDirecaoLivre(posicaoPeao, direcao)
-            print(f"dianteira vazia = {dianteiraVazia}")
+            #print(f"dianteira vazia = {dianteiraVazia}")
             if dianteiraVazia:
-                print("posciao peao a ser empurrado",posicaoPeao)
+                #print("posciao peao a ser empurrado",posicaoPeao)
                 #atualizando a posicao do rei na matriz para recuar
                 self.atualizarMatrizPosicoes(posicaoPeao, direcao, 3)
                 #atualizando a posicao do peao para recuar
@@ -313,3 +313,6 @@ class Tabuleiro():
 
     def getMatrizPosicoes(self):
         return self._matrizPosicoes
+    
+    def setMatrizPosicoes(self, matriz):
+        self._matrizPosicoes = matriz

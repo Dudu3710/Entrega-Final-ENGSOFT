@@ -9,8 +9,8 @@ from time import sleep
 class Interface():
     def __init__(self) -> None:
         self._janela = Tk()
-        self._partidaEncerrada = False
-        self._controlador = self._controlador = Controlador('', '')
+        self._partidaAndamento = False
+        self._controlador = None
         self._botaoApertado = ''
         self._mainFrame = Frame(self._janela,width=520,height=420, bg="white")
         self._buttonFrame = Frame(self._janela,width=520,height=100,bg='green')
@@ -73,8 +73,8 @@ class Interface():
         #apenas um teste !!! mudar depois para iniciar somente quando o botao de iniciar for apertado
         #self._controlador.preencherTabuleiro()
         botao_iniciar = Button(self._buttonFrame,text = "INICIAR",height = 4,width = 15,command=lambda:self.iniciar_jogo(''))
-        botao_desistir = Button(self._buttonFrame,text = "DESISTIR",height = 4,width = 15,command='')
-        botao_sair_jogo = Button(self._buttonFrame,text = "SAIR DO JOGO",height = 4,width = 15,command='')
+        botao_desistir = Button(self._buttonFrame,text = "DESISTIR",height = 4,width = 15,command=self.desistir_jogo)
+        botao_sair_jogo = Button(self._buttonFrame,text = "SAIR DO JOGO",height = 4,width = 15,command=self._janela.destroy)
         botao_iniciar.grid(row= 0, column=0)
         botao_desistir.grid(row= 0, column=1)
         botao_sair_jogo.grid(row= 0, column=2)
@@ -92,10 +92,30 @@ class Interface():
         #self.atualizaInterface(vazio,rei_1,rei_2,peao,self._mainFrame)
         self._janela.mainloop()
 
-    def iniciar_jogo(self,acao):
-        if self._controlador.getPartidaAndamento() == False:
+    def iniciar_jogo(self, acao):
+        if not self._partidaAndamento:
+            self._controlador = Controlador('', '')
+            self._partidaAndamento = True
             self._controlador.setPartidaAndamento(True)
             self.atualizaInterface(acao)
+        else:
+            self.atualizaInterface(acao)
+
+    def desistir_jogo(self  ):
+        self._controlador.setPartidaEncerrada(True)
+
+        if (self._controlador._jogadorDaVez == 1):
+            self._controlador._jogadorDaVez = 2
+        else:
+            self._controlador._jogadorDaVez = 1
+
+        self._controlador.setPosicoesTabuleiro(matriz = [[0,0,0,0,0],
+                                                         [0,0,0,0,0],
+                                                         [0,0,0,0,0],
+                                                         [0,0,0,0,0],
+                                                         [0,0,0,0,0]])
+
+        self.atualizaInterface('')
 
     def atualiza_imagem_rei(self,direcao,jogador):
         if jogador == 1:
@@ -119,9 +139,11 @@ class Interface():
                 return self._rei_2_e
 
     def atualizaInterface(self,acao):
+        print(self._controlador.getPartidaAndamento())
+
         if self._controlador.getPartidaAndamento():
             self._controlador.verificarAcao(acao)
-            labelInstrucao = Label(self._mensagem, text='                    ' , font="Courier 21",bg = "lightgrey")
+            labelInstrucao = Label(self._mensagem, text='                           ' , font="Courier 21",bg = "lightgrey")
             labelInstrucao.grid(row=0, column=0)
 
             if (acao == 'e' or acao == 'p') and (self._controlador.getFlagJogada() == False):
@@ -135,12 +157,9 @@ class Interface():
                     texto = 'Jogador prata venceu!'
                 labelInstrucao = Label(self._mensagem, text=texto , font="Courier 21")
                 labelInstrucao.grid(row=0, column=0)
-
-
-            print(self._controlador.getJogadorDaVez())
-            print(self._controlador.getDirecaoJogadorDaVez())
-            print(np.matrix(self._controlador.getPosicoesTabuleiro()))
+                self._partidaAndamento = False
             
+
             for y in range(5):
                 for x in range(5):
                     if self._controlador.getPosicoesTabuleiro() [x][y] == 0:
@@ -160,8 +179,6 @@ class Interface():
                         print(imagem_r2)
                         labelReiDois = Label(self._mainFrame, bd = 2, relief="solid", image = imagem_r2)
                         xLabel = labelReiDois
-
-
 
                     xLabel.grid(row=x , column=y)
 
