@@ -1,6 +1,6 @@
 from tkinter import *
 from controlador import Controlador
-
+import time
 class Interface():
     def __init__(self) -> None:
         self._janela = Tk()
@@ -67,11 +67,6 @@ class Interface():
         else:
             self._controlador._jogadorDaVez = 1
 
-        self._controlador.setPosicoesTabuleiro(matriz = [[0,0,0,0,0],
-                                                         [0,0,0,0,0],
-                                                         [0,0,0,0,0],
-                                                         [0,0,0,0,0],
-                                                         [0,0,0,0,0]])
 
         self.atualizaInterface('')
 
@@ -111,6 +106,13 @@ class Interface():
                     texto = 'Jogador dourado venceu!'
                 else:
                     texto = 'Jogador prata venceu!'
+
+                self._controlador.setPosicoesTabuleiro(matriz = [[0,0,0,0,0],
+                                                                [0,0,0,0,0],
+                                                                [0,0,0,0,0],
+                                                                [0,0,0,0,0],
+                                                                [0,0,0,0,0]])
+
                 labelInstrucao = Label(self._mensagem, text=texto , font="Courier 21")
                 labelInstrucao.grid(row=0, column=0)
                 self._partidaAndamento = False
