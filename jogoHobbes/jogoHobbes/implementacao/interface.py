@@ -15,21 +15,21 @@ class Interface():
         self._mainFrame = Frame(self._janela,width=520,height=420, bg="white")
         self._buttonFrame = Frame(self._janela,width=520,height=100,bg='green')
         self._mensagem = Frame(self._janela,width=520,height=70, bg="lightgrey")
-        self._vazio = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/vazio.png")
-        self._rei_1_d = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_1_direita.png")
-        self._rei_1_e = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_1_esquerda.png")
-        self._rei_1_b = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_1_baixo.png")
-        self._rei_1_c = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_1_cima.png")
-        self._rei_2_d = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_2_direita.png")
-        self._rei_2_e = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_2_esquerda.png")
-        self._rei_2_b = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_2_baixo.png")
-        self._rei_2_c = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/rei_2_cima.png")
-        self._peao = PhotoImage(file = "jogoHobbes/jogoHobbes/implementacao/imagens/peao.png")
+        self._vazio = PhotoImage(file = "imagens/vazio.png")
+        self._rei_1_d = PhotoImage(file = "imagens/rei_1_direita.png")
+        self._rei_1_e = PhotoImage(file = "imagens/rei_1_esquerda.png")
+        self._rei_1_b = PhotoImage(file = "imagens/rei_1_baixo.png")
+        self._rei_1_c = PhotoImage(file = "imagens/rei_1_cima.png")
+        self._rei_2_d = PhotoImage(file = "imagens/rei_2_direita.png")
+        self._rei_2_e = PhotoImage(file = "imagens/rei_2_esquerda.png")
+        self._rei_2_b = PhotoImage(file = "imagens/rei_2_baixo.png")
+        self._rei_2_c = PhotoImage(file = "imagens/rei_2_cima.png")
+        self._peao = PhotoImage(file = "imagens/peao.png")
         self.fillMainWindow()
 
     def fillMainWindow(self):
         self._janela.title("UM PEGA-PEGA ENTRE REIS")
-        self._janela.iconbitmap("jogoHobbes/jogoHobbes/implementacao/imagens/coroa_icon.ico")
+        #self._janela.iconbitmap("imagens/coroa_icon.png")
         self._janela.geometry("770x730")
         self._janela.resizable(False, False)
         self._janela["bg"]="lightgrey"
@@ -131,8 +131,10 @@ class Interface():
             if self._controlador.getPartidaEncerrada():
                 if self._controlador._jogadorDaVez == 1:
                     texto = 'Jogador dourado venceu!'
+                    self.iniciar_jogo()
                 else:
                     texto = 'Jogador prata venceu!'
+                    self.iniciar_jogo()
                 labelInstrucao = Label(self._mensagem, text=texto , font="Courier 21")
                 labelInstrucao.grid(row=0, column=0)
 

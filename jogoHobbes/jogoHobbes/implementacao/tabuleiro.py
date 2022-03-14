@@ -222,7 +222,7 @@ class Tabuleiro():
                     impedido = self.verificarPosicoesAbaixo(self._jogadorUm._posicao)
 
                     if impedido:
-                        impedido = self.verificarPosicoesEsquerda(self._jogadorDois._posicao)
+                        impedido = self.verificarPosicoesEsquerda(self._jogadorUm._posicao)
 
                         if impedido:
                             self._vencedores.append(2)
@@ -255,9 +255,6 @@ class Tabuleiro():
                     x_oposto = i
                     y_oposto = j
 
-        print(f"posicao jogador {jogador} = x={x} y={y}")
-        print(f"posicao jogadoroposto {jogadorOposto} = x={x_oposto} y={y_oposto}")
-
         if (x_oposto == x-1 and y_oposto == y) or (x_oposto == x+1 and y_oposto == y) or (x_oposto == x and y_oposto == y+1) or (x_oposto == x and y_oposto == y-1):
             return True
         else:
@@ -265,7 +262,6 @@ class Tabuleiro():
 
     def verificarPosicoesAcima(self, posicao):
         x, y = posicao
-
         if x == 0:
             return True
         elif x == 1:
@@ -278,7 +274,6 @@ class Tabuleiro():
 
     def verificarPosicoesDireita(self, posicao):
         x, y = posicao
-
         if y == 4:
             return True
         elif y == 3:
@@ -291,7 +286,6 @@ class Tabuleiro():
 
     def verificarPosicoesAbaixo(self, posicao):
         x, y = posicao
-
         if x == 4:
             return True
         elif x == 3:
@@ -304,7 +298,6 @@ class Tabuleiro():
 
     def verificarPosicoesEsquerda(self, posicao):
         x, y = posicao
-
         if y == 0:
             return True
         elif y == 1:
