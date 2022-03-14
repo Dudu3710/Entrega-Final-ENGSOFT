@@ -131,10 +131,8 @@ class Interface():
             if self._controlador.getPartidaEncerrada():
                 if self._controlador._jogadorDaVez == 1:
                     texto = 'Jogador dourado venceu!'
-                    self.iniciar_jogo()
                 else:
                     texto = 'Jogador prata venceu!'
-                    self.iniciar_jogo()
                 labelInstrucao = Label(self._mensagem, text=texto , font="Courier 21")
                 labelInstrucao.grid(row=0, column=0)
 
