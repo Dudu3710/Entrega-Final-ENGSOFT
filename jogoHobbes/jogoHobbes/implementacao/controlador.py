@@ -5,15 +5,13 @@ import random
 class Controlador():
     def __init__(self, nomeJodadorUm:str, nomeJogadorDois:str) -> None:
         self._tabuleiro = Tabuleiro()
-        self._jogadorDaVez = 0 #consistente com o diagrama de estados do controlador
+        self._jogadorDaVez = 0
         self._vencedores = []
         self._acao = ''
         self._partidaAndamento = False
         self._partidaEncerrada = False
         self._jogadaObrigatoriaRealizada = False
-        self._flagJogada = False #-----> Criei esse flagJogada para comunicacao com a interface
-        self.preencherTabuleiro()   #---> acho que temos que tirar isso
-        self.definirJogadorDaVez()    #---> acho que temos que tirar isso
+        self._flagJogada = False
 
     def preencherTabuleiro(self):
         self._tabuleiro.criarTabuleiro()
@@ -46,32 +44,24 @@ class Controlador():
 
     def verificarAcao(self, input):
         if input == 'w':
-            #print('recebi acao w\n')
             self._acao = 'cima'
         elif input == 'a':
-            #print('recebi acao a\n')
             self._acao = 'esquerda'
         elif input == 's':
-            #print('recebi acao s\n')
             self._acao = 'baixo'
         elif input == 'd':
-            #print('recebi acao d\n')
             self._acao = 'direita'
         elif input == 'p':
-            #print('recebi acao p\n')
             self._acao = 'puxar'
         elif input == 'e':
-            #print('recebi acao e\n')
             self._acao = 'empurrar'
         else:
             self._acao = ''
 
         direcao = self.getDirecaoJogadorDaVez()
-        #direcao = self._tabuleiro.getDirecaoJogadorDaVez(self._jogadorDaVez)
 
         #jogada opcional
         if (self._acao == 'cima') or(self._acao == 'direita') or (self._acao == 'esquerda') or (self._acao == 'baixo'):
-            #seta aponta para mesma direcao do movimento
             if self._acao == direcao:
                 self.moverRei(self._jogadorDaVez, direcao)
             else:
@@ -86,8 +76,6 @@ class Controlador():
                 self._jogadaObrigatoriaRealizada=self.empurrarPeao(self._jogadorDaVez, direcao)  #MUDAR DIAGRAMA DE SEQUENCIA DE PUXAR E 
                                                                                    #EMPURRAR PEAO POIS ELES DEVEM INFORMAR QUE NAO EH POSSIVEL REALIZAR MOVIMENTO
                                                                                    #ELES RETORNAM TRUE SE FOI POSSIVEL E FALSO CASO NAO FOI POSSIVEL
-            
-            #print("JOGADA OBRIGATORIA REALIZADA = ",self._jogadaObrigatoriaRealizada)
 
             if self._jogadaObrigatoriaRealizada:
 
@@ -96,7 +84,6 @@ class Controlador():
 
                 if vencedores:
                     self._partidaEncerrada = True
-                    #print("partida encerrada")
                 else:
                     self._jogadorDaVez = self.mudarJogadorDaVez(self._jogadorDaVez)
                     self._flagJogada = True
